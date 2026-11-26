@@ -56,6 +56,17 @@ class VenvManager:
 
         return self.python.is_file() and self.runner.is_file() and self.launcher.is_file()
 
+    def refresh_launcher(self) -> None:
+        """Refresh the managed runner and launcher without reinstalling Paddle.
+
+        This is used after a plugin update so an existing environment picks up
+        new runner modes, such as the PP-StructureV3 table/Markdown mode.
+        """
+
+        if not self.python.is_file():
+            raise VenvError("The managed OCR environment does not exist yet.")
+        self._write_launcher()
+
     def remove(self) -> None:
         """Delete the managed environment.
 

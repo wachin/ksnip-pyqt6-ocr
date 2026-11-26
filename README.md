@@ -57,9 +57,14 @@ Read that document before changing the plugin/core boundary.
 - Configure the core application with:
 
   ```text
-  ocr/backend     = script
-  ocr/script_path = <managed launcher>
+  ocr/backend                 = script
+  ocr/script_path             = <managed launcher>
+  ocr/structure_script_path   = <managed launcher>
   ```
+
+- Run PP-StructureV3 for the core table/Markdown and HTML actions. The core
+  passes `KSNIP_OCR_MODE=markdown` or `html`, plus the selected language and
+  formula flag, to the same managed launcher.
 
 - Keep Paddle models in Paddle's normal cache:
 
@@ -262,7 +267,8 @@ The core owns:
 
 - plugin discovery;
 - the generic Script backend;
-- OCR settings (`ocr/backend`, `ocr/script_path`);
+- OCR settings (`ocr/backend`, `ocr/script_path`,
+  `ocr/structure_script_path`);
 - the OCR action that honors the configured backend.
 
 The plugin owns:

@@ -1,3 +1,12 @@
+ksnip-pyqt6-ocr (0.1.4-1) unstable; urgency=medium
+
+  * Route the core table/Markdown OCR backend through the managed launcher.
+  * Add KSNIP_OCR_MODE=markdown/html support to the standalone runner.
+  * Refresh the managed launcher when the plugin configuration is applied,
+    so existing environments pick up the new runner without a reinstall.
+
+ -- wachin <wachin.id@gmail.com>  Wed, 25 Nov 2026 21:30:00 -0500
+
 ksnip-pyqt6-ocr (0.1.3-1) unstable; urgency=medium
 
   * Label the legacy PaddleOCR cache as optional and explain that current

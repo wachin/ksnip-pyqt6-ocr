@@ -57,7 +57,15 @@ class PaddleOcrPlugin:
 
             settings = QSettings()
 
+        try:
+            self.venv_manager.refresh_launcher()
+        except Exception as exc:  # noqa: BLE001
+            raise RuntimeError(f"Could not refresh the OCR launcher: {exc}") from exc
+
         settings.setValue("ocr/backend", "script")
         settings.setValue("ocr/script_path", str(self.venv_manager.launcher))
+        settings.setValue(
+            "ocr/structure_script_path", str(self.venv_manager.launcher)
+        )
         settings.sync()
         return True
