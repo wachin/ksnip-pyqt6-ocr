@@ -158,7 +158,7 @@ The button uses the system file manager through Qt's `QDesktopServices`.
 | --- | --- | --- |
 | `${XDG_DATA_HOME:-$HOME/.local/share}/ksnip-pyqt6/ocr-venv` | Private Python environment with pip, PaddlePaddle, PaddleOCR, PaddleX, and the OCR launcher. | Use the Model Manager's **Remove environment** button. |
 | `~/.paddlex/official_models` | Downloaded PaddleX model weights for text detection, recognition, and optional layout, table, and formula analysis. | Models are data. Deleting them only causes a later re-download. |
-| `~/.paddleocr` | Legacy PaddleOCR cache used by some pipelines for models or temporary data. | It may be absent; remove it only when PaddleOCR is not running. |
+| `~/.paddleocr` | Legacy cache used by older PaddleOCR releases and some old pipelines. Current PaddleOCR 3.x/PaddleX uses `~/.paddlex/official_models`, so this folder is optional and normally absent. | It may be absent; remove it only when PaddleOCR is not running. |
 | `${XDG_CACHE_HOME:-$HOME/.cache}/pip` | Downloaded Python wheels and source archives used by pip. | Safe to clear; it is not needed at runtime. |
 | `.../ocr-venv/lib/pythonX.Y/site-packages` | Installed Python packages and their metadata inside the managed environment. | Do not delete individual files; use the Model Manager to remove the environment. |
 

@@ -1,3 +1,12 @@
+ksnip-pyqt6-ocr (0.1.3-1) unstable; urgency=medium
+
+  * Label the legacy PaddleOCR cache as optional and explain that current
+    PaddleOCR 3.x/PaddleX uses the PaddleX official model cache.
+  * Show "Not present (optional)" for optional caches such as ~/.paddleocr
+    and the pip download cache.
+
+ -- wachin <wachin.id@gmail.com>  Wed, 25 Nov 2026 21:10:00 -0500
+
 ksnip-pyqt6-ocr (0.1.2-1) unstable; urgency=medium
 
   * Initial packaging for upstream/GitHub distribution.

@@ -61,6 +61,7 @@ class StorageLocation:
     title: str
     path: Path
     description: str
+    optional: bool = False
 
 
 class SizeWorker(QThread):
@@ -150,6 +151,7 @@ class ModelManagerDialog(QDialog):
         self._worker: InstallWorker | None = None
         self._size_worker: SizeWorker | None = None
         self._size_labels: dict[str, QLabel] = {}
+        self._optional_locations: dict[str, bool] = {}
 
         self.setWindowTitle(self.tr("Model Manager - PaddleOCR"))
         self.setMinimumSize(780, 640)
@@ -287,13 +289,16 @@ class ModelManagerDialog(QDialog):
             ),
             StorageLocation(
                 key="paddleocr",
-                title=self.tr("PaddleOCR cache"),
+                title=self.tr("PaddleOCR cache (legacy, optional)"),
                 path=Path.home() / ".paddleocr",
                 description=self.tr(
-                    "Legacy PaddleOCR cache used by some OCR pipelines for "
-                    "downloaded models or temporary data. It may be absent on "
-                    "new installations."
+                    "Legacy cache used by older PaddleOCR releases and some "
+                    "old pipelines. Current PaddleOCR 3.x and PaddleX store "
+                    "their models in ~/.paddlex/official_models, so this "
+                    "folder is optional and normally absent. If it appears, "
+                    "deleting it only forces a later re-download."
                 ),
+                optional=True,
             ),
             StorageLocation(
                 key="pip",
@@ -304,6 +309,7 @@ class ModelManagerDialog(QDialog):
                     "is not needed at runtime and can be cleared safely; it "
                     "only makes a later reinstall faster."
                 ),
+                optional=True,
             ),
             StorageLocation(
                 key="site-packages",
@@ -333,6 +339,7 @@ class ModelManagerDialog(QDialog):
         path_row.addWidget(path_label, 1)
         size_label = QLabel(self.tr("Calculating..."), card)
         self._size_labels[location.key] = size_label
+        self._optional_locations[location.key] = location.optional
         path_row.addWidget(size_label)
         open_button = QPushButton(self.tr("Open"), card)
         open_button.clicked.connect(lambda: self._open_path(location.path))
@@ -403,7 +410,11 @@ class ModelManagerDialog(QDialog):
             _format_size(sizes.get("environment"))
         )
         for key, label in self._size_labels.items():
-            label.setText(_format_size(sizes.get(key)))
+            value = sizes.get(key)
+            if value is None and self._optional_locations.get(key):
+                label.setText(self.tr("Not present (optional)"))
+            else:
+                label.setText(_format_size(value))
 
     def _open_path(self, path: Path) -> None:
         if not path.exists():
