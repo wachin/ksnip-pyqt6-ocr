@@ -12,6 +12,24 @@ compiled runtime catalog.
 If a catalog is missing or incomplete, Qt falls back to the English source
 strings.
 
+## Tools
+
+Install Qt Linguist and the translation tools on Debian:
+
+```bash
+sudo apt install linguist-qt6 qt6-l10n-tools pyqt6-dev-tools
+```
+
+- `linguist6` opens and validates `.ts` files.
+- `lrelease` compiles a `.ts` file into the runtime `.qm` file.
+- `pylupdate6` extracts the current strings from the Python sources.
+
+Open the Spanish catalog for review:
+
+```bash
+linguist6 ksnip_py_ocr/translations/ksnip_py_ocr_es.ts
+```
+
 ## Adding a locale
 
 1. Copy `ksnip_py_ocr_es.ts` to `ksnip_py_ocr_<locale>.ts`.

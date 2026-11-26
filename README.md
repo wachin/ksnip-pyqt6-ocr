@@ -7,10 +7,10 @@ This repository is an **upstream/GitHub add-on**, not part of the core Debian
 package. It is intended to keep the core application self-contained while
 still offering a convenient way to install PaddleOCR for users who want it.
 
-> **Project status:** initial skeleton / early development. The plugin entry
-> point, API, managed-environment installer, and standalone OCR runner are
-> present. Core-side plugin discovery and the optional packaging are still
-> being implemented. No release artifact is available yet.
+> **Project status:** active development. The plugin entry point, API,
+> managed-environment installer, standalone OCR runner, core-side discovery,
+> storage inspector, translations, and upstream `.deb` packaging are
+> implemented.
 
 ## Why this repository exists
 
@@ -37,7 +37,7 @@ The architecture and the Debian policy rationale are documented in:
 
 Read that document before changing the plugin/core boundary.
 
-## What the plugin will do
+## What the plugin does
 
 - Expose the optional Model Manager UI in ksnip-pyqt6.
 - Create a private OCR environment under:
@@ -195,7 +195,7 @@ The plugin is intended for the same Python environment as
 `ksnip-pyqt6` (for entry-point discovery) and for a separate managed
 environment (for Paddle itself).
 
-Planned host requirements:
+Host requirements:
 
 - Python 3.11 or newer;
 - PyQt6;
@@ -204,13 +204,13 @@ Planned host requirements:
 - enough disk space for PaddlePaddle, PaddleOCR, PaddleX, and the models;
 - a compatible CPU/runtime for the Paddle wheels.
 
-Exact pinned versions will be published with the first implementation. They
-must remain compatible with the tested PaddleOCR/PaddlePaddle versions used by
-the core project's OCR documentation.
+The pinned Paddle versions live in `ksnip_py_ocr/venv_manager.py`
+(`PADDLE_PACKAGES`). Keep them compatible with the tested
+PaddleOCR/PaddlePaddle versions used by the core project's OCR documentation.
 
 ## Development installation
 
-The plugin is not released yet. The source workflow is:
+The source workflow is:
 
 ```bash
 git clone https://github.com/wachin/ksnip-pyqt6-ocr.git
@@ -246,6 +246,47 @@ Turkish, Ukrainian, Simplified Chinese, and Traditional Chinese.
 
 See [ksnip_py_ocr/translations/README.md](ksnip_py_ocr/translations/README.md)
 for the catalog workflow.
+
+### Reviewing `.ts` files with Qt Linguist
+
+Install the Qt translation tools:
+
+```bash
+sudo apt install linguist-qt6 qt6-l10n-tools pyqt6-dev-tools
+```
+
+The packages provide:
+
+- `linguist6`: Qt Linguist, the graphical `.ts` editor;
+- `lrelease`: compiles `.ts` files into `.qm`;
+- `pylupdate6`: extracts translatable strings from the Python sources.
+
+Open a catalog for review:
+
+```bash
+linguist6 ksnip_py_ocr/translations/ksnip_py_ocr_es.ts
+```
+
+Review the source and translated columns, complete any unfinished entries, and
+check that placeholders such as `%1` are preserved. Do not translate product
+names or model identifiers such as `PaddleOCR`, `PaddlePaddle`, `PaddleX`,
+`PP-OCRv5`, `PP-OCRv6`, `PP-StructureV3`, or `PP-FormulaNet_plus-L`.
+
+After editing a `.ts`, compile it:
+
+```bash
+lrelease ksnip_py_ocr/translations/ksnip_py_ocr_es.ts \
+  -qm ksnip_py_ocr/translations/ksnip_py_ocr_es.qm
+```
+
+To refresh the source strings from the current Python code:
+
+```bash
+pylupdate6 ksnip_py_ocr/*.py \
+  -ts ksnip_py_ocr/translations/ksnip_py_ocr_es.ts
+```
+
+Then review the new or changed messages and compile the catalog again.
 
 ## Building the optional Debian package
 
