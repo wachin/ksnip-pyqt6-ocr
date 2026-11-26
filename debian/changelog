@@ -1,3 +1,10 @@
+ksnip-pyqt6-ocr (0.1.5-1) unstable; urgency=medium
+
+  * Describe which PaddleX models serve plain text, PP-StructureV3
+    Markdown/HTML tables, and PP-FormulaNet formula recognition.
+
+ -- wachin <wachin.id@gmail.com>  Wed, 25 Nov 2026 21:45:00 -0500
+
 ksnip-pyqt6-ocr (0.1.4-1) unstable; urgency=medium
 
   * Route the core table/Markdown OCR backend through the managed launcher.

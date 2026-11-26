@@ -281,10 +281,21 @@ class ModelManagerDialog(QDialog):
                 title=self.tr("PaddleX model cache"),
                 path=Path.home() / ".paddlex" / "official_models",
                 description=self.tr(
-                    "Model weights used by PaddleX for text detection, text "
-                    "recognition, and optionally layout, table, and formula "
-                    "analysis. They are downloaded on demand. Deleting them "
-                    "only forces PaddleOCR to download them again."
+                    "Model weights used by PaddleX. The current OCR setup uses:\n"
+                    "- Plain text: PP-OCRv5/PP-OCRv6 detection and recognition.\n"
+                    "- Tables + Markdown/HTML: PP-StructureV3 uses "
+                    "PP-DocLayout_plus-L and PP-DocBlockLayout for layout, "
+                    "PP-LCNet_x1_0_table_cls for table classification, "
+                    "SLANeXt_wired and SLANet_plus for table structure, "
+                    "RT-DETR-L_wired_table_cell_det and "
+                    "RT-DETR-L_wireless_table_cell_det for table cells, and "
+                    "PP-OCRv5_mobile_det/rec for text. Markdown and HTML are "
+                    "two renderings of the same layout result.\n"
+                    "- Formulas: PP-FormulaNet_plus-L, downloaded only when "
+                    "Recognize mathematical formulas (LaTeX) is enabled.\n"
+                    "Models are downloaded on demand. Deleting them only "
+                    "forces a later re-download; other weights may remain "
+                    "from earlier PaddleOCR versions."
                 ),
             ),
             StorageLocation(

@@ -170,6 +170,25 @@ The button uses the system file manager through Qt's `QDesktopServices`.
 Sizes are calculated in a background thread so opening the dialog does not
 block the UI. A missing directory is shown as **Not present**.
 
+### What the model weights are used for
+
+The Model Manager describes the role of the current PaddleX cache:
+
+- **Plain text OCR** uses PP-OCRv5/PP-OCRv6 detection and recognition weights.
+- **Tables + Markdown/HTML** use PP-StructureV3. Its layout stage uses
+  `PP-DocLayout_plus-L` and `PP-DocBlockLayout`; table classification uses
+  `PP-LCNet_x1_0_table_cls`; table structure uses `SLANeXt_wired` and
+  `SLANet_plus`; table-cell detection uses `RT-DETR-L_wired_table_cell_det`
+  and `RT-DETR-L_wireless_table_cell_det`; text inside the layout uses
+  `PP-OCRv5_mobile_det`/`PP-OCRv5_mobile_rec`. Markdown and HTML are two
+  renderings of the same layout result.
+- **Formula recognition** uses `PP-FormulaNet_plus-L`. It is downloaded only
+  when the "Recognize mathematical formulas (LaTeX)" option is enabled.
+
+Model names can change between PaddleOCR releases. Other weights may remain in
+the cache from earlier versions; deleting a model only forces a later
+re-download.
+
 ## Requirements
 
 The plugin is intended for the same Python environment as
