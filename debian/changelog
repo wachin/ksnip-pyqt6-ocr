@@ -1,3 +1,12 @@
+ksnip-pyqt6-ocr (0.1.6-1) unstable; urgency=medium
+
+  * Add plugin-owned Qt translation catalogs.
+  * Translate the Model Manager into Spanish.
+  * Leave the remaining ksnip_py locales as future translation work; they
+    fall back to English until a catalog is added.
+
+ -- wachin <wachin.id@gmail.com>  Wed, 25 Nov 2026 22:05:00 -0500
+
 ksnip-pyqt6-ocr (0.1.5-1) unstable; urgency=medium
 
   * Describe which PaddleX models serve plain text, PP-StructureV3

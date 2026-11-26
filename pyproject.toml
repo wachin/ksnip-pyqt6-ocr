@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ksnip-pyqt6-ocr"
-version = "0.1.5"
+version = "0.1.6"
 description = "Optional managed PaddleOCR plugin for ksnip-pyqt6"
 readme = "README.md"
 license = "GPL-3.0-only"
@@ -30,4 +30,6 @@ include = ["ksnip_py_ocr*"]
 [tool.setuptools.package-data]
 ksnip_py_ocr = [
   "runner.py",
+  "translations/*.qm",
+  "translations/*.ts",
 ]

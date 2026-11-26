@@ -230,6 +230,18 @@ For entry-point discovery, the plugin must be installed in the same Python
 environment as the core application, or in a separately packaged Python
 environment visible to it.
 
+## Translations
+
+The plugin owns its Qt translation catalogs under
+`ksnip_py_ocr/translations/`. They are separate from the core `ksnip_py`
+catalogs.
+
+Spanish is translated. The other ksnip_py locales are intentionally left for
+later and fall back to English until their `.ts` and `.qm` files are added.
+
+See [ksnip_py_ocr/translations/README.md](ksnip_py_ocr/translations/README.md)
+for the catalog workflow.
+
 ## Building the optional Debian package
 
 The repository includes packaging for a standalone upstream `.deb`. It is

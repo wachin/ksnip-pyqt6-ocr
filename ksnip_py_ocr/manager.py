@@ -7,7 +7,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from PyQt6.QtCore import QThread, Qt, QUrl, pyqtSignal
+from PyQt6.QtCore import QCoreApplication, QLocale, QThread, QTranslator, Qt, QUrl, pyqtSignal
 from PyQt6.QtGui import QDesktopServices
 from PyQt6.QtWidgets import (
     QApplication,
@@ -152,6 +152,8 @@ class ModelManagerDialog(QDialog):
         self._size_worker: SizeWorker | None = None
         self._size_labels: dict[str, QLabel] = {}
         self._optional_locations: dict[str, bool] = {}
+        self._translator: QTranslator | None = None
+        self._install_translator()
 
         self.setWindowTitle(self.tr("Model Manager - PaddleOCR"))
         self.setMinimumSize(780, 640)
@@ -261,6 +263,25 @@ class ModelManagerDialog(QDialog):
 
         self._refresh()
         self._refresh_sizes()
+
+    def _install_translator(self) -> None:
+        app = QCoreApplication.instance()
+        if app is None:
+            return
+        translator = QTranslator(self)
+        translations = Path(__file__).with_name("translations")
+        if translator.load(QLocale(), "ksnip_py_ocr", "_", str(translations)):
+            app.installTranslator(translator)
+            self._translator = translator
+
+    def _remove_translator(self) -> None:
+        if self._translator is None:
+            return
+        app = QCoreApplication.instance()
+        if app is not None:
+            app.removeTranslator(self._translator)
+        self._translator.deleteLater()
+        self._translator = None
 
     def _build_locations(self) -> list[StorageLocation]:
         venv = self._manager.venv_dir
@@ -417,15 +438,35 @@ class ModelManagerDialog(QDialog):
         _finish_size_worker(worker)
 
     def _on_sizes(self, sizes: dict[str, int | None]) -> None:
-        self.environment_size_label.setText(
-            _format_size(sizes.get("environment"))
+        self._set_size_text(
+            self.environment_size_label,
+            sizes.get("environment"),
+            optional=False,
         )
         for key, label in self._size_labels.items():
-            value = sizes.get(key)
-            if value is None and self._optional_locations.get(key):
-                label.setText(self.tr("Not present (optional)"))
-            else:
-                label.setText(_format_size(value))
+            self._set_size_text(
+                label,
+                sizes.get(key),
+                optional=self._optional_locations.get(key, False),
+            )
+
+    def _set_size_text(
+        self,
+        label: QLabel,
+        value: int | None,
+        *,
+        optional: bool,
+    ) -> None:
+        if value is None:
+            label.setText(
+                self.tr("Not present (optional)")
+                if optional
+                else self.tr("Not present")
+            )
+        elif value < 0:
+            label.setText(self.tr("Unavailable"))
+        else:
+            label.setText(_format_size(value))
 
     def _open_path(self, path: Path) -> None:
         if not path.exists():
@@ -532,4 +573,5 @@ class ModelManagerDialog(QDialog):
                 worker.requestInterruption()
             except RuntimeError:
                 self._size_worker = None
+        self._remove_translator()
         event.accept()
