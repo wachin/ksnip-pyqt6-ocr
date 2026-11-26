@@ -236,8 +236,13 @@ The plugin owns its Qt translation catalogs under
 `ksnip_py_ocr/translations/`. They are separate from the core `ksnip_py`
 catalogs.
 
-Spanish is translated. The other ksnip_py locales are intentionally left for
-later and fall back to English until their `.ts` and `.qm` files are added.
+The Model Manager is translated into all 41 locales supported by ksnip_py:
+Arabic, Bulgarian, Bengali (Bangladesh), Catalan, Central Kurdish, Czech,
+Danish, German, Greek, Spanish, Estonian, Basque, Persian, Finnish, French
+(Canada), French, Galician, Hebrew, Croatian, Hungarian, Indonesian, Italian,
+Japanese, Georgian, Korean, Dutch, Norwegian, Polish, Portuguese (Brazil),
+Portuguese, Romanian, Russian, Sinhala, Slovenian, Albanian, Swedish, Tamil,
+Turkish, Ukrainian, Simplified Chinese, and Traditional Chinese.
 
 See [ksnip_py_ocr/translations/README.md](ksnip_py_ocr/translations/README.md)
 for the catalog workflow.

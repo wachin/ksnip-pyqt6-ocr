@@ -270,9 +270,29 @@ class ModelManagerDialog(QDialog):
             return
         translator = QTranslator(self)
         translations = Path(__file__).with_name("translations")
-        if translator.load(QLocale(), "ksnip_py_ocr", "_", str(translations)):
+        if self._load_translator(translator, QLocale(), translations):
             app.installTranslator(translator)
             self._translator = translator
+
+    @staticmethod
+    def _load_translator(
+        translator: QTranslator,
+        locale: QLocale,
+        translations: Path,
+    ) -> bool:
+        if translator.load(locale, "ksnip_py_ocr", "_", str(translations)):
+            return True
+        name = locale.name()
+        aliases: list[str] = []
+        if name.startswith("nb") or name.startswith("no"):
+            aliases.append("no")
+        if name in {"zh_TW", "zh_HK", "zh_MO"}:
+            aliases.append("zh_Hant")
+        for alias in aliases:
+            path = translations / f"ksnip_py_ocr_{alias}.qm"
+            if path.is_file() and translator.load(str(path)):
+                return True
+        return False
 
     def _remove_translator(self) -> None:
         if self._translator is None:

@@ -5,10 +5,12 @@ core `ksnip_py` catalogs so the optional plugin can be translated on its own.
 
 Source language: English.
 
-Current catalog: Spanish (`ksnip_py_ocr_es.ts` / `.qm`).
+Catalogs exist for all 41 locales supported by ksnip_py. Each `.ts` contains
+the English source strings and the translated text; each matching `.qm` is the
+compiled runtime catalog.
 
-The other ksnip_py locales are intentionally left for later. Until a catalog is
-added, Qt falls back to the English source strings.
+If a catalog is missing or incomplete, Qt falls back to the English source
+strings.
 
 ## Adding a locale
 
