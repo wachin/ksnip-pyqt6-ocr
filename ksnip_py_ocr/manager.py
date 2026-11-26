@@ -156,6 +156,12 @@ class ModelManagerDialog(QDialog):
         self._install_translator()
 
         self.setWindowTitle(self.tr("Model Manager - PaddleOCR"))
+        self.setWindowFlags(
+            self.windowFlags()
+            | Qt.WindowType.WindowMinimizeButtonHint
+            | Qt.WindowType.WindowMaximizeButtonHint
+            | Qt.WindowType.WindowCloseButtonHint
+        )
         self.setMinimumSize(780, 640)
         _install_size_quit_hook()
 

@@ -1,3 +1,9 @@
+ksnip-pyqt6-ocr (0.1.8-1) unstable; urgency=medium
+
+  * Add minimize and maximize buttons to the Model Manager window.
+
+ -- wachin <wachin.id@gmail.com>  Wed, 25 Nov 2026 22:30:00 -0500
+
 ksnip-pyqt6-ocr (0.1.7-1) unstable; urgency=medium
 
   * Translate the Model Manager into all 41 locales supported by ksnip_py.
