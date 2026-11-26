@@ -7,3 +7,12 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .coverage
+
+debian/.debhelper/
+debian/tmp/
+debian/files
+debian/*.substvars
+debian/ksnip-pyqt6-ocr/
+.pybuild/
+debian/debhelper-build-stamp
+debian/*.debhelper

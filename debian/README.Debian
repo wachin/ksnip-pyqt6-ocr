@@ -1,0 +1,13 @@
+ksnip-pyqt6-ocr for Debian
+
+This package is an upstream/GitHub add-on for ksnip-pyqt6. It installs an
+optional Model Manager that creates a private virtual environment and installs
+PaddlePaddle/PaddleOCR from PyPI at runtime, after an explicit user action.
+
+It is not part of the Debian main archive. A package that downloads and
+installs executable Python code at runtime does not meet the main-area
+self-containment requirements, so the core ksnip-pyqt6 package must remain
+usable without this plugin.
+
+The plugin only configures the core Script OCR backend. It does not add a
+build-time dependency on Paddle to the core package.

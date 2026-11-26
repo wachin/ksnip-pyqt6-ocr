@@ -206,6 +206,34 @@ For entry-point discovery, the plugin must be installed in the same Python
 environment as the core application, or in a separately packaged Python
 environment visible to it.
 
+## Building the optional Debian package
+
+The repository includes packaging for a standalone upstream `.deb`. It is
+intended for GitHub Releases and installs the plugin into the system Python so
+the core can discover its entry point:
+
+```bash
+cd ksnip-pyqt6-ocr
+dpkg-buildpackage -b -us -uc
+```
+
+The resulting package is created next to the repository:
+
+```text
+../ksnip-pyqt6-ocr_0.1.2-1_all.deb
+```
+
+Install the matching core package first, then the plugin:
+
+```bash
+sudo apt install ../ksnip-pyqt6_0.2.2-4_all.deb
+sudo apt install ../ksnip-pyqt6-ocr_0.1.2-1_all.deb
+```
+
+The plugin package declares `python3-pip`, `python3-venv`, PyQt6, and the core
+application as dependencies. It still creates the Paddle environment at
+runtime. It is not part of the Debian main archive.
+
 The optional upstream `.deb` will be built separately from the core Debian
 package and will depend on the matching `ksnip-pyqt6` version.
 

@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+# The plugin tests need PyQt6 and, for the installer path, network access.
+# Keep them out of the package build and run them from the source checkout.
+override_dh_auto_test:

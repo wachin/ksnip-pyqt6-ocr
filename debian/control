@@ -1,0 +1,38 @@
+Source: ksnip-pyqt6-ocr
+Section: graphics
+Priority: optional
+Maintainer: wachin <wachin.id@gmail.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               pybuild-plugin-pyproject,
+               python3-all,
+               python3-build,
+               python3-installer,
+               python3-setuptools,
+               python3-wheel
+Standards-Version: 4.7.4.1
+Rules-Requires-Root: no
+Homepage: https://github.com/wachin/ksnip-pyqt6-ocr
+Vcs-Git: https://github.com/wachin/ksnip-pyqt6-ocr.git
+Vcs-Browser: https://github.com/wachin/ksnip-pyqt6-ocr
+
+Package: ksnip-pyqt6-ocr
+Architecture: all
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         ksnip-pyqt6 (>= 0.2.2),
+         python3-pyqt6,
+         python3-pip,
+         python3-venv
+Description: optional managed PaddleOCR plugin for ksnip-pyqt6
+ This plugin adds an optional Model Manager to ksnip-pyqt6. It creates a
+ private Python virtual environment under the user's data directory, installs
+ PaddlePaddle and PaddleOCR there, and configures the core Script OCR backend
+ to use the managed launcher.
+ .
+ The plugin displays the environment, model cache, pip cache, and installed
+ package directories, together with their sizes and buttons that open them in
+ the system file manager.
+ .
+ This package is intended for upstream/GitHub installations. It downloads
+ Python packages at runtime and is not part of the Debian main archive.
