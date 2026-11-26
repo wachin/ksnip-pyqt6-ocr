@@ -148,6 +148,23 @@ The core must be able to:
 - hide or disable the Model Manager when the plugin is absent;
 - continue using the Script backend independently of the plugin.
 
+## Storage locations shown in the Model Manager
+
+The Model Manager shows each directory that the OCR stack creates or reuses,
+its current size, an **Open** button, and a description of what it contains.
+The button uses the system file manager through Qt's `QDesktopServices`.
+
+| Location | Purpose | Safe to delete? |
+| --- | --- | --- |
+| `${XDG_DATA_HOME:-$HOME/.local/share}/ksnip-pyqt6/ocr-venv` | Private Python environment with pip, PaddlePaddle, PaddleOCR, PaddleX, and the OCR launcher. | Use the Model Manager's **Remove environment** button. |
+| `~/.paddlex/official_models` | Downloaded PaddleX model weights for text detection, recognition, and optional layout, table, and formula analysis. | Models are data. Deleting them only causes a later re-download. |
+| `~/.paddleocr` | Legacy PaddleOCR cache used by some pipelines for models or temporary data. | It may be absent; remove it only when PaddleOCR is not running. |
+| `${XDG_CACHE_HOME:-$HOME/.cache}/pip` | Downloaded Python wheels and source archives used by pip. | Safe to clear; it is not needed at runtime. |
+| `.../ocr-venv/lib/pythonX.Y/site-packages` | Installed Python packages and their metadata inside the managed environment. | Do not delete individual files; use the Model Manager to remove the environment. |
+
+Sizes are calculated in a background thread so opening the dialog does not
+block the UI. A missing directory is shown as **Not present**.
+
 ## Requirements
 
 The plugin is intended for the same Python environment as

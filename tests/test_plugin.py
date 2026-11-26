@@ -3,6 +3,7 @@ import tempfile
 import unittest
 
 from ksnip_py_ocr.plugin import PaddleOcrPlugin
+from ksnip_py_ocr.manager import _format_size
 from ksnip_py_ocr.venv_manager import VenvManager
 
 
@@ -18,6 +19,12 @@ class PluginApiTest(unittest.TestCase):
             plugin = PaddleOcrPlugin(Path(directory) / "ocr-venv")
             self.assertFalse(plugin.is_available())
             self.assertIn("not been installed", plugin.status_text())
+
+    def test_size_formatting(self) -> None:
+        self.assertEqual(_format_size(None), "Not present")
+        self.assertEqual(_format_size(0), "0 B")
+        self.assertEqual(_format_size(1024), "1.0 KiB")
+        self.assertEqual(_format_size(1024 * 1024), "1.0 MiB")
 
     def test_venv_manager_uses_the_requested_directory(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
