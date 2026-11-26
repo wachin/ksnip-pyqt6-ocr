@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ksnip-pyqt6-ocr"
+version = "0.1.0"
+description = "Optional managed PaddleOCR plugin for ksnip-pyqt6"
+readme = "README.md"
+license = {text = "GPL-3.0-only"}
+requires-python = ">=3.11"
+authors = [
+  {name = "wachin", email = "wachin.id@gmail.com"},
+]
+dependencies = [
+  "ksnip-pyqt6>=0.2.2,<0.3",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8",
+]
+
+[project.entry-points."ksnip_py.ocr"]
+paddle = "ksnip_py_ocr.plugin:PaddleOcrPlugin"
+
+[tool.setuptools.packages.find]
+include = ["ksnip_py_ocr*"]
+
+[tool.setuptools.package-data]
+ksnip_py_ocr = [
+  "runner.py",
+]

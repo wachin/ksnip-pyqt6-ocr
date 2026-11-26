@@ -7,9 +7,10 @@ This repository is an **upstream/GitHub add-on**, not part of the core Debian
 package. It is intended to keep the core application self-contained while
 still offering a convenient way to install PaddleOCR for users who want it.
 
-> **Project status:** design proposal / early development. The plugin API and
-> the core integration are still being implemented. No release artifact is
-> available yet.
+> **Project status:** initial skeleton / early development. The plugin entry
+> point, API, managed-environment installer, and standalone OCR runner are
+> present. Core-side plugin discovery and the optional packaging are still
+> being implemented. No release artifact is available yet.
 
 ## Why this repository exists
 
@@ -97,7 +98,7 @@ paddle = "ksnip_py_ocr.plugin:PaddleOcrPlugin"
 If the plugin is not installed, the core starts normally and keeps the generic
 Script backend available.
 
-## Planned repository layout
+## Repository layout
 
 ```text
 ksnip-pyqt6-ocr/
@@ -113,14 +114,14 @@ ksnip-pyqt6-ocr/
   tests/
 ```
 
-Planned responsibilities:
+Current responsibilities:
 
 - `plugin.py`: entry-point class and the stable plugin API.
 - `manager.py`: Model Manager dialog and user-facing installation flow.
 - `venv_manager.py`: create, verify, and remove the managed environment.
 - `runner.py`: small OCR entry point executed inside the managed environment.
 
-## Planned plugin API
+## Plugin API
 
 The initial API version is `1`:
 
@@ -166,10 +167,9 @@ Exact pinned versions will be published with the first implementation. They
 must remain compatible with the tested PaddleOCR/PaddlePaddle versions used by
 the core project's OCR documentation.
 
-## Planned installation
+## Development installation
 
-The plugin is not released yet. Once the skeleton and API are implemented, the
-intended source workflow will be:
+The plugin is not released yet. The source workflow is:
 
 ```bash
 git clone https://github.com/wachin/ksnip-pyqt6-ocr.git
@@ -177,6 +177,12 @@ cd ksnip-pyqt6-ocr
 python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip setuptools wheel
 .venv/bin/python -m pip install -e .
+```
+
+Run the plugin tests with:
+
+```bash
+.venv/bin/python -m unittest discover -s tests -v
 ```
 
 For entry-point discovery, the plugin must be installed in the same Python
@@ -228,7 +234,8 @@ plugin is installed. Imports belong inside the plugin's installer or runner.
 ## Development roadmap
 
 - [ ] Define the stable plugin API and discovery module in the core.
-- [ ] Add the entry-point skeleton in this repository.
+- [x] Add the entry-point skeleton in this repository.
+- [x] Add the managed-environment installer and standalone OCR runner.
 - [ ] Move the Model Manager and Paddle-specific code out of the core.
 - [ ] Keep only the Script backend in the core.
 - [ ] Implement managed environment creation and verification.
