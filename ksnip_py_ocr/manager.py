@@ -51,7 +51,7 @@ class ModelManagerDialog(QDialog):
         self._manager = manager
         self._worker: InstallWorker | None = None
 
-        self.setWindowTitle(self.tr("Model Manager — PaddleOCR"))
+        self.setWindowTitle(self.tr("Model Manager - PaddleOCR"))
         self.setMinimumWidth(620)
 
         layout = QVBoxLayout(self)
@@ -123,7 +123,7 @@ class ModelManagerDialog(QDialog):
             )
         else:
             self.status_label.setText(
-                self.tr("Not installed. Use “Install / Repair OCR environment”.")
+                self.tr("Not installed. Use 'Install / Repair OCR environment'.")
             )
         self.remove_button.setEnabled(ready and self._worker is None)
         self.install_button.setEnabled(self._worker is None)
