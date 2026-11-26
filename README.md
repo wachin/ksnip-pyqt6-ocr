@@ -1,0 +1,1 @@
+# ksnip-pyqt6-ocr
